@@ -4,8 +4,7 @@ url: >-
 apis:
   - aid: bot-butcher:bot-butcher
     name: Bot Butcher
-    tags:
-      - API
+    tags: []
     humanURL: ' https://botbutcher.com/'
     properties:
       - url: ' https://botbutcher.com/'
