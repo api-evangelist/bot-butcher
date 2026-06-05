@@ -2,7 +2,7 @@
 
 Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large language model to classify contact form submissions as spam or legitimate messages. The service analyzes messages within the context of what each website is about, providing context-aware classification with 99% reported accuracy. It supports multi-tenant architectures and is designed for enterprise scalability across vertical SaaS and website builder platforms.
 
-**URL:** [https://raw.githubusercontent.com/api-evangelist/bot-butcher/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bot-butcher/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bot-butcher/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bot-butcher/refs/heads/main/apis.yml)
 
 ## Scope
 
@@ -27,9 +27,9 @@ Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large lan
 
 ### Bot Butcher Classification API
 
-AI-powered spam classification for contact form submissions. Submit form data via POST, receive a JSON classification result (spam or not spam). Context-aware analysis per website. Optionally retrieve messages by message_id.
+Submit contact form data to Bot Butcher and receive a JSON classification result indicating whether the message is spam or legitimate. The AI model classifies each message within the context of your specific website, delivering context-aware spam detection for multi-tenant and enterprise applications.
 
-**Human URL:** [https://botbutcher.com/](https://botbutcher.com/)
+- **Human URL:** [https://botbutcher.com/](https://botbutcher.com/)
 
 #### Tags
 
@@ -41,28 +41,15 @@ AI-powered spam classification for contact form submissions. Submit form data vi
 #### Properties
 
 - [Documentation](https://botbutcher.com/)
+- [Postman Collection](collections/bot-butcher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/bot-butcher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## Key Features
+## Common Properties
 
-- Fine-tuned LLM for spam classification
-- 99% accuracy against benchmark test
-- Context-aware per-website classification
-- Multi-tenant support (unlimited websites)
-- Optional message storage (Do Not Save mode)
-- Optional training opt-out (Do Not Train mode)
-- Message retrieval by message_id
-- JSON response format
-- API Key authentication
-
-## Use Cases
-
-- Contact form spam filtering
-- Enterprise SaaS spam protection
-- Multi-tenant application security
-- Website builder platform integration
+- [Website](https://botbutcher.com/)
+- [Documentation](https://botbutcher.com/)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** info@apievangelist.com
