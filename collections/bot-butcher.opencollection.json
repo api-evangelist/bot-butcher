@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bot Butcher Classification API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Classification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Classify a message as spam or legitimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.botbutcher.com/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit contact form data to Bot Butcher and receive a JSON classification result."
+        },
+        {
+          "info": {
+            "name": "Retrieve a previously classified message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.botbutcher.com/message/:message_id",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of a previously submitted message."
+              }
+            ]
+          },
+          "docs": "Retrieve a previously classified message"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
