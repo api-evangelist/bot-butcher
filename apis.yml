@@ -43,6 +43,8 @@ apis:
       - FN: Bot Butcher Support
         url: https://botbutcher.com/
 common:
+  - type: AgenticAccess
+    url: agentic-access/bot-butcher-agentic-access.yml
   - type: DomainSecurity
     url: security/bot-butcher-domain-security.yml
   - type: Authentication
