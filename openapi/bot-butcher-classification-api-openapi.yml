@@ -1,22 +1,25 @@
 openapi: 3.1.0
 info:
   title: Bot Butcher Classification API
-  description: |
-    Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large
+  description: 'Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large
+
     language model to classify contact form submissions as spam or legitimate
+
     messages within the context of a specific website.
-  version: "1.0.0"
+
+    '
+  version: 1.0.0
   contact:
     name: Bot Butcher
     url: https://botbutcher.com
 servers:
-  - url: https://api.botbutcher.com
-    description: Production
+- url: https://api.botbutcher.com
+  description: Production
 security:
-  - ApiKeyAuth: []
+- ApiKeyAuth: []
 tags:
-  - name: Classification
-    description: Submit and retrieve classified messages.
+- name: Classification
+  description: Submit and retrieve classified messages.
 paths:
   /:
     post:
@@ -24,7 +27,7 @@ paths:
       summary: Classify a message as spam or legitimate
       description: Submit contact form data to Bot Butcher and receive a JSON classification result.
       tags:
-        - Classification
+      - Classification
       requestBody:
         required: true
         content:
@@ -47,14 +50,14 @@ paths:
       operationId: getMessage
       summary: Retrieve a previously classified message
       tags:
-        - Classification
+      - Classification
       parameters:
-        - name: message_id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Unique identifier of a previously submitted message.
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique identifier of a previously submitted message.
       responses:
         '200':
           description: Stored message and classification result
@@ -67,16 +70,11 @@ paths:
         '401':
           description: Authentication failure
 components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: x-api-key
   schemas:
     ClassificationRequest:
       type: object
       required:
-        - message
+      - message
       properties:
         message:
           type: string
@@ -103,3 +101,8 @@ components:
         metadata:
           type: object
           additionalProperties: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
