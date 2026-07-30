@@ -9,7 +9,20 @@ tags:
   - Security
 type: Index
 kind: company
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bot-butcher.png
 access: 3rd-Party
 created: '2025-01-07'
 modified: '2026-04-21'
@@ -22,26 +35,33 @@ description: >-
   multi-tenant architectures and is designed for enterprise scalability across
   vertical SaaS and website builder platforms.
 apis:
-  - aid: bot-butcher:bot-butcher-classification-api
-    name: Bot Butcher Classification API
-    tags:
-      - Spam Detection
-      - Bot Detection
-      - AI Classification
-      - Contact Forms
-    humanURL: https://botbutcher.com/
-    properties:
-      - url: https://botbutcher.com/
-        type: Documentation
-    description: >-
-      Submit contact form data to Bot Butcher and receive a JSON classification
-      result indicating whether the message is spam or legitimate. The AI model
-      classifies each message within the context of your specific website,
-      delivering context-aware spam detection for multi-tenant and enterprise
-      applications.
-    contact:
-      - FN: Bot Butcher Support
-        url: https://botbutcher.com/
+- aid: bot-butcher:bot-butcher-classification-api
+  name: Bot Butcher Classification API
+  tags:
+  - Spam Detection
+  - Bot Detection
+  - AI Classification
+  - Contact Forms
+  humanURL: https://botbutcher.com/
+  properties:
+  - url: https://botbutcher.com/
+    type: Documentation
+  description: >-
+    Submit contact form data to Bot Butcher and receive a JSON classification result indicating whether
+    the message is spam or legitimate. The AI model classifies each message within the context of your
+    specific website, delivering context-aware spam detection for multi-tenant and enterprise applications.
+  contact:
+  - FN: Bot Butcher Support
+    url: https://botbutcher.com/
+- aid: bot-butcher:bot-butcher-classification-api
+  name: Bot Butcher Classification API
+  description: Submit and retrieve classified messages.
+  humanURL: https://botbutcher.com/
+  tags:
+  - Classification
+  properties:
+  - type: OpenAPI
+    url: openapi/bot-butcher-classification-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/bot-butcher-agentic-access.yml
