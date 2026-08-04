@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Bot Butcher Classification API
+  description: |
+    Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large
+    language model to classify contact form submissions as spam or legitimate
+    messages within the context of a specific website.
+  version: "1.0.0"
+  contact:
+    name: Bot Butcher
+    url: https://botbutcher.com
+servers:
+  - url: https://api.botbutcher.com
+    description: Production
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Classification
+    description: Submit and retrieve classified messages.
+paths:
+  /:
+    post:
+      operationId: classifyMessage
+      summary: Classify a message as spam or legitimate
+      description: Submit contact form data to Bot Butcher and receive a JSON classification result.
+      tags:
+        - Classification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassificationRequest'
+      responses:
+        '200':
+          description: Classification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassificationResult'
+        '400':
+          description: Malformed request
+        '401':
+          description: Authentication failure
+  /message/{message_id}:
+    get:
+      operationId: getMessage
+      summary: Retrieve a previously classified message
+      tags:
+        - Classification
+      parameters:
+        - name: message_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of a previously submitted message.
+      responses:
+        '200':
+          description: Stored message and classification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassificationResult'
+        '400':
+          description: Malformed request
+        '401':
+          description: Authentication failure
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+  schemas:
+    ClassificationRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: The contact form message to classify.
+        domain:
+          type: string
+          description: Optional domain or website context for the message.
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Optional arbitrary metadata captured with the submission.
+    ClassificationResult:
+      type: object
+      properties:
+        id:
+          type: string
+        classification:
+          type: string
+          description: Spam / legitimate classification result.
+        message:
+          type: string
+        domain:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true

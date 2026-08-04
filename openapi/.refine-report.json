@@ -1,0 +1,14 @@
+{
+  "provider": "bot-butcher",
+  "sources": [
+    "bot-butcher-classification-api-openapi.yml"
+  ],
+  "outputs": [
+    "bot-butcher-classification-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
