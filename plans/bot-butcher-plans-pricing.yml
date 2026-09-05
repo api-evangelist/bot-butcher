@@ -3,142 +3,95 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Bot Butcher
 providerId: bot-butcher
+generated: '2026-09-04'
+method: searched
+source: https://botbutcher.com/pricing
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
 tags:
   - Bots
   - Spam Detection
   - Contact Forms
   - AI Classification
   - Security
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: >-
+  Published pricing for the Bot Butcher Classification API, read verbatim from
+  https://botbutcher.com/pricing (fetched 2026-09-04, HTTP 200). Bot Butcher sells a single
+  usage-based product with a graduated per-request price and a monthly flat fee that is waived
+  below eleven requests a month. This file REPLACES a 2026-05-04 scaffold that carried invented
+  Free / Professional / Enterprise tiers, quotas and rate limits the provider has never published.
+plan_count: 1
+model: usage-based
+currency: USD
+billingPeriod: month
+notes:
+  - >-
+    The provider presents one plan, labelled "Usage based", with a "Try for free" call to action,
+    unlimited forms and email support. There is no named Free / Pro / Enterprise ladder.
+  - >-
+    The first 10 requests each month are free of both the per-request price and the flat fee.
+    A provider blog post (https://botbutcher.com/blog/maximize-privacy) states the same:
+    "the first 10 requests each month for free".
+  - >-
+    No enterprise or contact-sales tier is published, and no annual term or committed-use
+    discount is published.
 plans:
-  - id: bot-butcher-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Bot Butcher API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
+  - id: bot-butcher-usage-based
+    name: Usage based
+    type: usage-based
+    description: >-
+      The single published Bot Butcher plan. Priced per classification request on a graduated
+      monthly volume band, plus a monthly flat fee once usage passes ten requests. Includes
+      unlimited forms and email support.
+    price: graduated
+    currency: USD
+    billingPeriod: month
     elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
+      - name: Unlimited forms
+      - name: Email support
       - name: Bot Butcher Classification API
-  - id: bot-butcher-pro
-    name: Professional
-    type: paid
-    description: Production tier for Bot Butcher. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
+      - label: 0 - 10 requests / month
+        name: tier_0_10
         type: metered
         metric: requests
-        limit: -1
+        rangeStart: 0
+        rangeEnd: 10
+        pricePerRequest: '0.00'
+        monthlyFlatFee: '0.00'
+        currency: USD
         timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Bot Butcher Classification API
-  - id: bot-butcher-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Bot Butcher. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
+      - label: 11 - 100 requests / month
+        name: tier_11_100
+        type: metered
         metric: requests
-        limit: -1
+        rangeStart: 11
+        rangeEnd: 100
+        pricePerRequest: '0.00'
+        monthlyFlatFee: '1.99'
+        currency: USD
         timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Bot Butcher Classification API
+      - label: 101 - 1000 requests / month
+        name: tier_101_1000
+        type: metered
+        metric: requests
+        rangeStart: 101
+        rangeEnd: 1000
+        pricePerRequest: '0.02'
+        monthlyFlatFee: '1.99'
+        currency: USD
+        timeFrame: month
+      - label: 1001+ requests / month
+        name: tier_1001_plus
+        type: metered
+        metric: requests
+        rangeStart: 1001
+        rangeEnd: null
+        pricePerRequest: '0.01'
+        monthlyFlatFee: '1.99'
+        currency: USD
+        timeFrame: month
+signup: https://botbutcher.com/get-started
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com

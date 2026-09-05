@@ -1,0 +1,32 @@
+generated: '2026-09-04'
+method: generated
+source: >-
+  openapi/bot-butcher-classification-api-openapi.yml, https://botbutcher.com/documentation, and
+  conventions/bot-butcher-conventions.yml
+provider: Bot Butcher
+providerId: bot-butcher
+description: >-
+  Packaged Agent Skills for the Bot Butcher Classification API. Bot Butcher publishes no skills,
+  AGENTS.md or agent documentation of its own; these were written by API Evangelist against the
+  provider's two real operationIds and its published error, pricing and privacy semantics.
+skill_count: 2
+skills:
+  - name: classify-contact-form-submission
+    file: bot-butcher-classify-contact-form-submission.md
+    api: bot-butcher:bot-butcher-classification-api
+    operations:
+      - classifyMessage
+    consequence: write
+    billable: true
+    reversible: false
+  - name: get-classified-message
+    file: bot-butcher-get-classified-message.md
+    api: bot-butcher:bot-butcher-classification-api
+    operations:
+      - getMessage
+    consequence: read
+    billable: false
+    reversible: true
+coverage:
+  operations_total: 2
+  operations_covered: 2

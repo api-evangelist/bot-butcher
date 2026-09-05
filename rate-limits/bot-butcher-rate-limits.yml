@@ -3,11 +3,11 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Bot Butcher
 providerId: bot-butcher
+generated: '2026-09-04'
+method: searched
+source: https://botbutcher.com/documentation
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
 tags:
   - Bots
   - Spam Detection
@@ -15,78 +15,50 @@ tags:
   - AI Classification
   - Security
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Bot Butcher API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: >-
+  Rate limiting posture for the Bot Butcher Classification API. Bot Butcher publishes NO rate
+  limits. The API reference (https://botbutcher.com/documentation, HTTP 200) documents exactly two
+  error responses — 400 malformed request and 401 unauthorized — and names no 429, no throttling
+  window, no burst allowance and no rate-limit response headers. The pricing page
+  (https://botbutcher.com/pricing, HTTP 200) publishes monthly volume bands that are PRICING
+  tiers, not enforced ceilings. This file REPLACES a 2026-05-04 scaffold that asserted per-minute
+  limits, burst ceilings, X-RateLimit-* headers and a 429 response, none of which the provider
+  publishes.
+limit_count: 0
+limits: []
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  documented: false
+  note: >-
+    No rate-limit response headers (X-RateLimit-*, RateLimit-*, Retry-After) are documented, and
+    none were observed. Live header observation is not possible anonymously: the classify endpoint
+    requires an x-api-key and an unauthenticated request is refused.
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Bot Butcher Classification API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
+  documented:
+    - code: 400
+      meaning: Malformed request — missing JSON payload value, missing message_id, unknown message_id, or missing required header.
+    - code: 401
+      meaning: Unauthorized — authentication failed.
+  throttled: null
+  note: No 429 or 503 response is documented for this API.
+quotas:
+  - scope: account
+    metric: requests
     timeFrame: month
-    applies:
-      - Bot Butcher Classification API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Bot Butcher Classification API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Bot Butcher Classification API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Bot Butcher Classification API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    limit: null
+    note: >-
+      Usage is metered and billed rather than capped. The first 10 requests each month are free;
+      beyond that, requests are priced per the published graduated bands. No hard ceiling and no
+      overage cutoff is published.
+evidence:
+  - url: https://botbutcher.com/documentation
+    status: 200
+    finding: Only 400 and 401 documented; no 429, no rate-limit headers, no throttling policy.
+  - url: https://botbutcher.com/pricing
+    status: 200
+    finding: Monthly request bands are price tiers, not enforced limits.
+  - url: https://api.botbutcher.com/
+    status: 405
+    finding: API host answers; root is POST-only, so no anonymous response headers to read.
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com

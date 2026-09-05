@@ -1,0 +1,100 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://botbutcher.com/documentation, https://botbutcher.com/privacy,
+  https://botbutcher.com/blog/maximize-privacy, and
+  openapi/bot-butcher-classification-api-openapi.yml
+description: >-
+  Standards and compliance conformance assessment for the Bot Butcher Classification API. Each
+  entry records whether the contract or the provider's own published material demonstrates
+  conformance, with the evidence used. Nothing here is asserted from a marketing page alone.
+summary:
+  conformant: 1
+  non_conformant: 8
+  claimed_unverified: 1
+conformance:
+  - id: rest-json
+    name: JSON over HTTPS
+    conforms: true
+    evidence: >-
+      openapi/bot-butcher-classification-api-openapi.yml — both operations exchange
+      application/json over https://api.botbutcher.com; verified live, the API host answers on TLS
+      1.3 and the root returns 405 to a GET, consistent with the documented POST-only design.
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in the contract; /.well-known/oauth-authorization-server returns 404
+      on all three hosts. Authentication is a static x-api-key header.
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404 on botbutcher.com, www and api hosts.
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      https://botbutcher.com/documentation documents prose error descriptions and a bespoke
+      status_code body field; no application/problem+json media type or type URI is published.
+  - id: rfc9116
+    name: RFC 9116 security.txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on all three hosts.
+  - id: rfc8594
+    name: RFC 8594 Sunset header
+    conforms: false
+    evidence: No deprecation or sunset policy is published; see lifecycle/bot-butcher-lifecycle.yml.
+  - id: idempotency
+    name: Idempotent write semantics
+    conforms: false
+    evidence: >-
+      No idempotency key or replay protection on POST / (classifyMessage); see
+      conventions/bot-butcher-conventions.yml, idempotency.coverage = none.
+  - id: pagination
+    name: Collection pagination
+    conforms: false
+    evidence: No collection endpoint exists; neither documented operation returns a list.
+  - id: rate-limit-headers
+    name: RateLimit header fields for HTTP
+    conforms: false
+    evidence: >-
+      No X-RateLimit-*, RateLimit-* or Retry-After header is documented; see
+      rate-limits/bot-butcher-rate-limits.yml, limit_count = 0.
+domain_standard:
+  applicable: false
+  note: >-
+    Contact-form spam classification has no industry interchange standard for this pipeline to
+    check against — there is no equivalent of SCIM, OpenRTB, FHIR or ISO 20022 for spam verdicts.
+    The contract declares no domain-standard signature (no standard URN, no $metadata surface, no
+    standard message type), and none is expected. Reward-only dimension: recorded as not
+    applicable rather than failed.
+claims:
+  - id: hipaa-storage
+    name: HIPAA-compliant data storage
+    status: claimed-unverified
+    conforms: false
+    claim: >-
+      "For the data that is stored, Bot Butcher uses HIPAA-compliant storage solutions."
+    evidence: https://botbutcher.com/blog/maximize-privacy
+    assessment: >-
+      A self-asserted claim in a provider blog post. No trust center, no SOC 2 or ISO 27001
+      attestation, no BAA offer and no certification page is published anywhere on the site
+      (probe-security-programs.py returned vdp=none trust=none on 2026-09-04), so this is recorded
+      as a claim rather than as published compliance. No Compliance pointer is emitted in apis.yml.
+  - id: privacy-controls
+    name: Optional no-storage and no-training modes
+    status: claimed-documented-outside-the-contract
+    conforms: false
+    claim: >-
+      Free options to store no messages and to exclude sent messages from model training,
+      described as configured "in the Bot Butcher dashboard or via API configuration".
+    evidence: https://botbutcher.com/blog/maximize-privacy
+    assessment: >-
+      Real published product features, but the API reference documents no request field, header or
+      endpoint that sets either mode, so an integrator cannot exercise them from the contract.
+privacy_posture:
+  do_not_track_supported: false
+  evidence: >-
+    https://botbutcher.com/privacy — "The Services do not currently support 'do not track'
+    requests at this time."
+  data_subject_contact: botbutcher@hillsidelab.com

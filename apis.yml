@@ -12,40 +12,45 @@ kind: company
 deliveryModel:
   model: unknown
   open_source: false
-  commercial: false
+  commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Commercial API — usage-based pricing published, no product licence on record
+  confidence: medium
   source:
   - openapi
-  generated: '2026-08-28'
+  - plans
+  generated: '2026-09-04'
   method: derived
 accessModel:
-  pricing: freemium
+  pricing: usage-based
   onboarding: self-serve
-  trial: false
+  trial: true
   try_now: true
-  public: false
-  label: Freemium · Self-serve signup
-  confidence: medium
+  public: true
+  label: Usage-based · Self-serve signup · First 10 requests each month free
+  confidence: high
   source:
   - plans
   - authentication
   - security
-  generated: '2026-09-03'
-  method: derived
+  generated: '2026-09-04'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bot-butcher.png
 access: 3rd-Party
 created: '2025-01-07'
-modified: '2026-04-21'
+modified: '2026-09-04'
 position: Consuming
 description: >-
   Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large
   language model to classify contact form submissions as spam or legitimate messages.
   The service analyzes messages within the context of what each website is about,
-  providing context-aware classification with 99% reported accuracy. It supports
-  multi-tenant architectures and is designed for enterprise scalability across
-  vertical SaaS and website builder platforms.
+  providing context-aware classification with 99% reported accuracy against the
+  provider's own human-graded benchmark. It supports multi-tenant architectures and is
+  designed for enterprise scalability across vertical SaaS and website builder
+  platforms. The API has two operations — classify a message, retrieve a message by id —
+  authenticated with a per-form x-api-key header, and is sold on a single usage-based
+  plan whose first ten requests each month are free. Bot Butcher is operated by
+  Hillside Lab Inc, a Delaware corporation based in Pasadena, California.
 apis:
 - aid: bot-butcher:bot-butcher-classification-api
   name: Bot Butcher Classification API
@@ -54,48 +59,91 @@ apis:
   - Bot Detection
   - AI Classification
   - Contact Forms
-  humanURL: https://botbutcher.com/
-  properties:
-  - url: https://botbutcher.com/
-    type: Documentation
-  description: >-
-    Submit contact form data to Bot Butcher and receive a JSON classification result indicating whether
-    the message is spam or legitimate. The AI model classifies each message within the context of your
-    specific website, delivering context-aware spam detection for multi-tenant and enterprise applications.
-  contact:
-  - FN: Bot Butcher Support
-    url: https://botbutcher.com/
-- aid: bot-butcher:bot-butcher-classification-api
-  name: Bot Butcher Classification API
-  description: Submit and retrieve classified messages.
-  humanURL: https://botbutcher.com/
-  tags:
   - Classification
+  humanURL: https://botbutcher.com/documentation
+  baseURL: https://api.botbutcher.com
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bot-butcher.png
+  description: >-
+    Submit contact form data to Bot Butcher and receive a JSON classification result indicating
+    whether the message is spam or legitimate. The AI model classifies each message within the
+    context of your specific website, delivering context-aware spam detection for multi-tenant and
+    enterprise applications. A message_id returned with each verdict can be used to retrieve the
+    stored message and its classification later.
   properties:
   - type: OpenAPI
     url: openapi/bot-butcher-classification-api-openapi.yml
+  - type: Documentation
+    url: https://botbutcher.com/documentation
+  - type: APIReference
+    url: https://botbutcher.com/documentation
+  - type: PostmanCollection
+    url: collections/bot-butcher-api-published.postman_collection.json
+  - type: Overlay
+    url: overlays/bot-butcher-classification-api-overlay.yaml
+  - type: X-MCPServerCandidate
+    url: mcp/bot-butcher-mcp.yml
+  contact:
+  - FN: Bot Butcher Support
+    email: botbutcher@hillsidelab.com
+    url: https://botbutcher.com/
 common:
+  - type: Website
+    url: https://botbutcher.com/
+  - type: Documentation
+    url: https://botbutcher.com/documentation
+  - type: APIReference
+    url: https://botbutcher.com/documentation
+  - type: GettingStarted
+    url: https://botbutcher.com/get-started
+  - type: SignUp
+    url: https://botbutcher.com/get-started
+  - type: Login
+    url: https://botbutcher.com/login
+  - type: Pricing
+    url: https://botbutcher.com/pricing
+  - type: TermsOfService
+    url: https://botbutcher.com/terms
+  - type: PrivacyPolicy
+    url: https://botbutcher.com/privacy
+  - type: Postman
+    url: https://god.postman.co/run-collection/24192121-47f4e172-5026-4788-b752-cbbc5488a03e
   - type: AgenticAccess
     url: agentic-access/bot-butcher-agentic-access.yml
   - type: DomainSecurity
     url: security/bot-butcher-domain-security.yml
   - type: Authentication
     url: authentication/bot-butcher-authentication.yml
-  - type: Website
-    url: https://botbutcher.com/
-  - type: Documentation
-    url: https://botbutcher.com/
+  - type: Conventions
+    url: conventions/bot-butcher-conventions.yml
+  - type: ErrorCatalog
+    url: errors/bot-butcher-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/bot-butcher-lifecycle.yml
+  - type: Conformance
+    url: conformance/bot-butcher-conformance.yml
+  - type: DataModel
+    url: data-model/bot-butcher-data-model.yml
+  - type: Plans
+    url: plans/bot-butcher-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/bot-butcher-rate-limits.yml
+  - type: LLMsTxt
+    url: llms/bot-butcher-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
 properties:
   - type: x-domain
     value: botbutcher.com
+  - type: x-operator
+    value: Hillside Lab Inc (Delaware corporation, Pasadena, California)
   - type: x-industry
     value: Cybersecurity, Spam Detection
   - type: x-authentication
-    value: API Key
+    value: API Key (x-api-key header, one key per contact form)
   - type: x-classification-model
     value: Fine-tuned Large Language Model (LLM)
   - type: x-accuracy
-    value: 99% against benchmark test
+    value: 99% against the provider's human-graded benchmark test
   - type: x-features
     value: >-
       Spam classification, message retrieval by message_id, optional message
@@ -113,7 +161,20 @@ properties:
       2. AI classifies message as spam or not spam,
       3. Receive JSON result,
       4. Optionally retrieve message by message_id
+  - type: x-no-sdks
+    value: >-
+      No client libraries are published in any package registry; the reference offers
+      copy-paste snippets in seven languages built on stock HTTP clients.
+  - type: x-agent-gaps
+    value: >-
+      No idempotency on the billable write, no reversal path for a stored message, no
+      published rate limits or rate-limit headers, and no sandbox or test mode.
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.23'
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v3

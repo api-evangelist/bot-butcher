@@ -1,15 +1,65 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/bot-butcher-openapi.yml
+generated: '2026-09-04'
+method: searched
+source: https://botbutcher.com/documentation
+docs: https://botbutcher.com/documentation
+description: >-
+  Authentication profile for the Bot Butcher Classification API. A single static API key sent in
+  the x-api-key request header authenticates every operation. There is no OAuth, no OIDC, no
+  bearer token, no mTLS and no signed-request scheme. Read from the provider's published API
+  reference (HTTP 200, fetched 2026-09-04) and cross-checked against the provider's public
+  Postman collection, whose collection-level auth block is apikey / header / x-api-key.
 summary:
   types:
-  - apiKey
+    - apiKey
   api_key_in:
-  - header
+    - header
+  oauth: false
+  oidc: false
+  mtls: false
+  anonymous_access: false
 schemes:
-- name: ApiKeyAuth
-  type: apiKey
-  in: header
-  parameter: x-api-key
-  sources:
-  - openapi/bot-butcher-openapi.yml
+  - name: ApiKeyAuth
+    type: apiKey
+    in: header
+    parameter: x-api-key
+    required: true
+    applies_to:
+      - classifyMessage
+      - getMessage
+    description: >-
+      Required on every request. Documented as "x-api-key: (Required) API key to authenticate the
+      request." The provider's Postman collection describes API_KEY as "Each Form has its own key",
+      so a key is scoped to a single contact form rather than to the whole account.
+    sources:
+      - https://botbutcher.com/documentation
+      - openapi/bot-butcher-classification-api-openapi.yml
+      - collections/bot-butcher-api-published.postman_collection.json
+key_management:
+  issuance:
+    url: https://botbutcher.com/get-started
+    flow: >-
+      Self-serve. Create an account with first name, last name and a verified email address, or
+      continue with Google or GitHub, and accept the terms; the key is issued from the account.
+    verification: Email verification is required.
+  rotation:
+    documented: false
+    note: No key rotation, expiry, revocation or scoping procedure is documented.
+  scopes:
+    documented: false
+    note: >-
+      No OAuth scopes and no permission model are published. Keys are per-form, which is the only
+      granularity the provider describes.
+  transport:
+    tls_required: true
+    note: The documented base URL is https://api.botbutcher.com; no plaintext endpoint is published.
+failure_modes:
+  - status: 401
+    meaning: Unauthorized — returned when authentication fails.
+    source: https://botbutcher.com/documentation
+  - status: 400
+    meaning: Malformed request — returned when a required header (including x-api-key) is missing.
+    source: https://botbutcher.com/documentation
+gaps:
+  - No documented key rotation or revocation procedure.
+  - No expiry or lifetime is stated for an issued key.
+  - No scope or least-privilege model beyond one key per form.

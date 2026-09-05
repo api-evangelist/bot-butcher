@@ -1,0 +1,79 @@
+overlay: 1.0.0
+info:
+  title: Bot Butcher Classification API — API Evangelist enhancements
+  version: 1.0.0
+  x-generated: '2026-09-04'
+  x-method: generated
+  x-source: >-
+    Enhancements applied by API Evangelist over openapi/bot-butcher-classification-api-openapi.yml.
+    Every value below is drawn from the provider's own public material — the API reference at
+    https://botbutcher.com/documentation, the pricing page, the terms and privacy pages, and the
+    provider's public Postman collection — plus the derived artifacts in this repository. The
+    overlay is applied to our copy of the contract; the provider's documentation is not modified.
+extends: ../openapi/bot-butcher-classification-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-provider-slug: bot-butcher
+      x-operator: Hillside Lab Inc
+      x-support-email: botbutcher@hillsidelab.com
+      x-pricing: https://botbutcher.com/pricing
+      x-signup: https://botbutcher.com/get-started
+      x-privacy-policy: https://botbutcher.com/privacy
+      x-postman-collection: https://god.postman.co/run-collection/24192121-47f4e172-5026-4788-b752-cbbc5488a03e
+  - target: $.info
+    update:
+      x-agent-readiness:
+        idempotency: none
+        reversibility: none
+        rate_limit_signal: none
+        sandbox: none
+        error_format: bespoke-json
+        note: >-
+          See conventions/bot-butcher-conventions.yml. The single mutating operation has no replay
+          protection and no reversal path, and no rate-limit header is published.
+  - target: $.paths['/'].post
+    update:
+      x-billing:
+        billable: true
+        unit: request
+        free_allowance: First 10 requests each month
+        source: https://botbutcher.com/pricing
+      x-idempotent: false
+      x-reversible: false
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        subject: required
+        token:
+          max-ttl: 900
+        escalation:
+          human-in-the-loop: conditional
+        audit: required
+  - target: $.paths['/message/{message_id}'].get
+    update:
+      x-billing:
+        billable: false
+        note: >-
+          The pricing page meters classification requests; no separate price is published for
+          message retrieval.
+      x-idempotent: true
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        subject: optional
+        token:
+          max-ttl: 3600
+        audit: none
+  - target: $.components.schemas.ClassificationResult.properties.spam
+    update:
+      x-verdict: true
+      x-accuracy-claim: >-
+        The provider claims 99% accuracy against its own human-graded benchmark test
+        (https://botbutcher.com/, fetched 2026-09-04). Omitting the domain from the request
+        reduces accuracy by roughly 6% (https://botbutcher.com/blog/maximize-privacy).
+  - target: $.components.securitySchemes.ApiKeyAuth
+    update:
+      x-key-granularity: per-form
+      x-key-issuance: https://botbutcher.com/get-started
+      x-key-rotation-documented: false

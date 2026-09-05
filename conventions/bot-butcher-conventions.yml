@@ -1,0 +1,121 @@
+generated: '2026-09-04'
+method: searched
+source: https://botbutcher.com/documentation
+description: >-
+  Cross-cutting runtime semantics for the Bot Butcher Classification API, read from the provider's
+  published API reference and derived from openapi/bot-butcher-classification-api-openapi.yml.
+  Bot Butcher is a two-operation API — classify a message, fetch a message by id — and most
+  cross-cutting conventions an agent looks for are simply not published.
+authentication:
+  style: api-key-header
+  header: x-api-key
+  granularity: per-form
+  see: authentication/bot-butcher-authentication.yml
+base_url: https://api.botbutcher.com
+content_type:
+  request: application/json
+  response: application/json
+idempotency:
+  coverage: none
+  supported: false
+  header: null
+  scope: []
+  retention: null
+  note: >-
+    No idempotency key, no replay-protection header and no deduplication semantics are documented.
+    The single mutating operation (POST / classifyMessage) creates a new classification and a new
+    message_id on every call, so a retried submission is billed and stored twice with no way for a
+    client to signal that two calls are the same submission.
+reversibility:
+  grade: none
+  applicable: true
+  note: >-
+    The write surface is one operation, classifyMessage, which optionally stores the submitted
+    message and returns a message_id. No cancel, delete, void, purge or undo operation is
+    published — there is no documented API path that removes a stored message once it has been
+    submitted, and therefore no stated window either.
+  write_surfaces:
+    - operationId: classifyMessage
+      effect: >-
+        Submits a contact form message for classification and, unless message storage is turned
+        off, stores it for later retrieval by message_id.
+      reversal_operation: null
+      reversal_window: null
+      evidence: https://botbutcher.com/documentation
+  mitigations:
+    - >-
+      An account-level "no message storage" option is described in the provider's blog
+      (https://botbutcher.com/blog/maximize-privacy) as a free feature that stops messages being
+      stored at all. It is a configuration setting, not an API reversal, and the reference does not
+      document a request field or header that turns it on per call.
+    - >-
+      The privacy policy states a data subject may email botbutcher@hillsidelab.com to request
+      erasure. That is a human process with no stated turnaround, not an API operation.
+pagination:
+  supported: false
+  note: >-
+    Neither operation returns a collection. There is no list endpoint, so no pagination style,
+    parameters or response envelope exists. Message history is browsable only by logging into the
+    dashboard or by retrieving a known message_id.
+filtering_and_expansion:
+  supported: false
+  note: No sparse fieldsets, field expansion or query filtering is documented.
+metadata:
+  supported: true
+  field: metadata
+  applies_to:
+    - classifyMessage
+  note: >-
+    An arbitrary JSON object may be sent with a classify request and is returned on the stored
+    message. Documented as "Any information you want us to store with the request."
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header is documented. The nearest thing to a handle on a request
+    is message_id in the classify response body, which identifies the stored message rather than
+    the HTTP call.
+versioning:
+  strategy: none-published
+  url_versioning: false
+  header_versioning: false
+  media_type_versioning: false
+  note: >-
+    The base URL carries no version segment and no version header is documented. The OpenAPI in
+    this repository records info.version 1.0.0, which is API Evangelist's label, not a provider
+    version scheme.
+error_envelope:
+  shape: bespoke-json
+  rfc9457: false
+  fields:
+    - name: status_code
+      type: integer
+      note: The HTTP status is repeated inside the response body on both operations.
+    - name: notes
+      type: array
+      note: >-
+        Returned on a classify request when the supplied domain is not a valid domain. The
+        documented example message is "invalid domain". Classification still occurs, with less
+        accuracy.
+  documented_statuses:
+    - 400
+    - 401
+  see: errors/bot-butcher-problem-types.yml
+rate_limit_signaling:
+  headers_documented: false
+  retry_after: false
+  status_on_exhaustion: null
+  see: rate-limits/bot-butcher-rate-limits.yml
+  note: No rate limit, no 429 and no rate-limit response headers are published.
+dry_run_mode:
+  supported: false
+  note: >-
+    No sandbox, test mode, test key prefix or dry-run flag is published. Every call is a live,
+    billable classification against the production host.
+webhooks:
+  supported: false
+  note: No callbacks, webhooks or event subscriptions are documented; classification is synchronous.
+gaps_for_agents:
+  - No idempotency mechanism on the only mutating operation.
+  - No reversal path for a stored message, and no stated retention window.
+  - No rate-limit signal, so a client cannot back off on evidence.
+  - No sandbox or test mode, so a rehearsal costs real money and stores a real message.

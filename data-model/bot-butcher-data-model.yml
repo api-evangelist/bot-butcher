@@ -1,0 +1,67 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/bot-butcher-classification-api-openapi.yml
+description: >-
+  Entity graph for the Bot Butcher Classification API, derived from the schemas and id-reference
+  fields in the OpenAPI and cross-checked against the field descriptions in
+  https://botbutcher.com/documentation. The model is deliberately small: one persisted entity,
+  one request shape, one verdict.
+entity_count: 1
+entities:
+  - name: Message
+    schema: Message
+    description: >-
+      A contact form submission received by Bot Butcher, its spam verdict, and the optional
+      context and metadata sent with it. Persisted only when message storage is enabled on the
+      account.
+    identifier:
+      field: message_id
+      type: string
+      format: opaque
+      example_shape: 8anb591P-76sn1pn-850fknj
+      note: >-
+        Returned as message_id on a classify response and used as the message_id path parameter on
+        retrieval. The stored object itself does not echo the identifier in the documented
+        response body.
+    fields:
+      - name: message
+        type: string
+        description: The text content of the submission.
+      - name: spam
+        type: boolean
+        description: The classification verdict — true for spam, false for not spam.
+      - name: domain
+        type: string
+        description: Root domain where the contact form lives, when supplied.
+      - name: metadata
+        type: object
+        description: Arbitrary caller-supplied JSON stored with the message.
+      - name: timestamp
+        type: string
+        format: date-time
+        description: ISO 8601 creation time of the message.
+      - name: status_code
+        type: integer
+        description: HTTP status repeated in the body.
+    produced_by: classifyMessage
+    read_by: getMessage
+    deleted_by: null
+relationships: []
+relationship_note: >-
+  There are no $ref links between entities and no id-reference fields pointing at another
+  resource. Message is a standalone record; the only cross-entity concept the provider describes
+  is that an API key belongs to a single contact form ("Each Form has its own key",
+  collections/bot-butcher-api-published.postman_collection.json), which implies an unexposed
+  Form / Account entity that the public API does not model, list or address.
+implied_but_unexposed:
+  - name: Form
+    evidence: >-
+      Postman collection environment variable description, "API_KEY: Each Form has its own key."
+    note: No form resource, list or CRUD surface is published.
+  - name: Account
+    evidence: https://botbutcher.com/login and the dashboard referenced in the provider blog.
+    note: Managed in the web dashboard only; no account, usage or billing endpoint is published.
+id_prefixes:
+  documented: false
+  note: >-
+    message_id values in the published examples are opaque hyphenated strings with no type prefix.

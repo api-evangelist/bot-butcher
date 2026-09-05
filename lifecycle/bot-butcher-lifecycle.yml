@@ -1,0 +1,75 @@
+generated: '2026-09-04'
+method: searched
+source: https://botbutcher.com/documentation
+description: >-
+  Lifecycle, versioning and operational-transparency posture for Bot Butcher, read from the
+  provider's public site (documentation, pricing, terms, privacy, sitemap) on 2026-09-04.
+  Bot Butcher publishes no versioning policy, no deprecation policy, no status page, no changelog
+  and no SLA. No Deprecation or StatusPage pointer is emitted in apis.yml, because none exists.
+versioning:
+  scheme: none-published
+  current_version: null
+  url_versioning: false
+  header_versioning: false
+  note: >-
+    The published base URL is https://api.botbutcher.com with no version segment, and no version
+    header is documented. Nothing on the site states how a breaking change would be introduced.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, no notice period, and no RFC 8594 Sunset or Deprecation header is
+    documented. No operation in the OpenAPI is marked deprecated.
+status_page:
+  published: false
+  url: null
+  evidence:
+    - url: https://status.botbutcher.com/
+      status: 0
+      finding: Host does not resolve (NXDOMAIN).
+    - url: https://botbutcher.com/status
+      status: 404
+      finding: No status page on the primary site.
+changelog:
+  published: false
+  url: null
+  evidence:
+    - url: https://botbutcher.com/changelog
+      status: 404
+      finding: No changelog page.
+  note: >-
+    The sitemap's most recent lastmod is 2023-09-22 and the terms/privacy pages carry a 2023
+    copyright and a "Last Updated: March 31, 2023" date, so there is no dated record of API
+    change since 2023.
+sla:
+  published: false
+  uptime_target: null
+  note: >-
+    No service-level agreement, uptime target or support-response commitment is published. The
+    pricing page lists "Email support" as an included feature without a response time.
+support:
+  channel: email
+  address: botbutcher@hillsidelab.com
+  source: https://botbutcher.com/privacy
+  note: >-
+    Written on the privacy page as "botbutcher [at] hillsidelab [dot] com". No support portal,
+    community forum, ticketing system or public issue tracker is published.
+account_lifecycle:
+  source: https://botbutcher.com/terms
+  notes:
+    - >-
+      The terms state an account may be deactivated without notice if payment is past due, and
+      that any outstanding balance is payable in full within thirty days of cancellation or
+      termination of a subscription.
+    - >-
+      The operator of record is Hillside Lab Inc, a Delaware corporation at 115 W California Blvd
+      #9103, Pasadena, CA 91105, with a named affiliate Hillside Lab Canada, Inc.
+maturity_signals:
+  api_surface_stable_since: '2023'
+  last_site_update: '2023-09-22'
+  note: >-
+    Nothing on the public surface has a 2024, 2025 or 2026 date. The API host answers and the
+    product is live, but there is no published evidence of change in three years.

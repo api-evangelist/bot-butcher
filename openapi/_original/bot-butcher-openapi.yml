@@ -5,10 +5,24 @@ info:
     Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large
     language model to classify contact form submissions as spam or legitimate
     messages within the context of a specific website.
-  version: "1.0.0"
+
+    Submit a contact form message to the API root and receive a JSON body carrying
+    a boolean `spam` verdict and a `message_id` that can be used to retrieve the
+    stored message later.
+  version: '1.0.0'
   contact:
     name: Bot Butcher
     url: https://botbutcher.com
+  termsOfService: https://botbutcher.com/terms
+  x-generated-from: documentation
+  x-source-url: https://botbutcher.com/documentation
+  x-provenance: >-
+    Not published by Bot Butcher. Written by API Evangelist from the provider's own
+    public API reference at https://botbutcher.com/documentation (fetched 2026-09-04,
+    HTTP 200) and cross-checked against the provider's public Postman collection
+    (https://www.postman.com/collections/24192121-47f4e172-5026-4788-b752-cbbc5488a03e).
+    Every path, header, field, status code and example below appears verbatim in one of
+    those two sources.
 servers:
   - url: https://api.botbutcher.com
     description: Production
@@ -22,7 +36,10 @@ paths:
     post:
       operationId: classifyMessage
       summary: Classify a message as spam or legitimate
-      description: Submit contact form data to Bot Butcher and receive a JSON classification result.
+      description: >-
+        Submit contact form data to Bot Butcher and receive a JSON classification result.
+        Supplying the root domain where the contact form lives boosts accuracy; omitting it
+        reduces accuracy by roughly 6% but shares less data.
       tags:
         - Classification
       requestBody:
@@ -31,6 +48,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ClassificationRequest'
+            examples:
+              documented:
+                summary: Example payload from the Bot Butcher documentation
+                value:
+                  message: The spammy message posted to your contact form.
+                  domain: my-business-website.com
       responses:
         '200':
           description: Classification result
@@ -38,14 +61,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClassificationResult'
+              examples:
+                documented:
+                  summary: Example response from the Bot Butcher documentation
+                  value:
+                    spam: true
+                    message_id: 2383k0f-s5cPjaQBi1-87s10
+                    status_code: 200
         '400':
-          description: Malformed request
+          description: >-
+            Malformed request. Returned when a JSON payload value or a required header is missing.
         '401':
-          description: Authentication failure
+          description: Unauthorized. Returned when authentication fails.
   /message/{message_id}:
     get:
       operationId: getMessage
       summary: Retrieve a previously classified message
+      description: Retrieve a Message object previously submitted, by its unique identifier.
       tags:
         - Classification
       parameters:
@@ -54,24 +86,42 @@ paths:
           required: true
           schema:
             type: string
-          description: Unique identifier of a previously submitted message.
+          description: The unique identifier of the message to be retrieved.
+          example: 8anb591P-76sn1pn-850fknj
       responses:
         '200':
           description: Stored message and classification result
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClassificationResult'
+                $ref: '#/components/schemas/Message'
+              examples:
+                documented:
+                  summary: Example response from the Bot Butcher documentation
+                  value:
+                    status_code: 200
+                    timestamp: '2022-04-18T10:15:30Z'
+                    message: I want to schedule an appointment to fix my car. Please call me.
+                    spam: false
+                    domain: local-car-dealership.com
+                    metadata:
+                      repair-order: 1234567
+                      phone: '+13105555555'
         '400':
-          description: Malformed request
+          description: >-
+            Malformed request. Returned when the message_id is missing or unknown, or when a
+            required header is missing.
         '401':
-          description: Authentication failure
+          description: Unauthorized. Returned when authentication fails.
 components:
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: x-api-key
+      description: >-
+        API key issued at https://botbutcher.com/get-started. The provider's Postman
+        collection notes that each form has its own key.
   schemas:
     ClassificationRequest:
       type: object
@@ -80,26 +130,54 @@ components:
       properties:
         message:
           type: string
-          description: The contact form message to classify.
+          description: The text to classify as spam or not.
         domain:
           type: string
-          description: Optional domain or website context for the message.
+          description: >-
+            The root domain where the contact form is located. Optional; boosts accuracy.
         metadata:
           type: object
           additionalProperties: true
-          description: Optional arbitrary metadata captured with the submission.
+          description: Any information you want stored with the request.
     ClassificationResult:
       type: object
       properties:
-        id:
+        spam:
+          type: boolean
+          description: Indicates if the message is classified as spam (true) or not (false).
+        message_id:
           type: string
-        classification:
+          description: A unique identifier for the message.
+        status_code:
+          type: integer
+          description: HTTP status code indicating the success or failure of the request.
+        notes:
+          type: array
+          description: >-
+            Returned when a supplied domain is not a valid domain. Classification still
+            occurs, with less accuracy.
+          items:
+            type: string
+    Message:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code indicating the success or failure of the request.
+        timestamp:
           type: string
-          description: Spam / legitimate classification result.
+          format: date-time
+          description: ISO 8601 timestamp representing when the message was created.
         message:
           type: string
+          description: The text content of the message.
+        spam:
+          type: boolean
+          description: Indicates if the message is classified as spam (true) or not (false).
         domain:
           type: string
+          description: The root domain where the contact form exists, when provided.
         metadata:
           type: object
           additionalProperties: true
+          description: The optional data sent with the classify request, when provided.

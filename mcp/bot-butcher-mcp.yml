@@ -1,0 +1,83 @@
+generated: '2026-09-04'
+method: derived
+status: candidate
+source: openapi/bot-butcher-classification-api-openapi.yml
+description: >-
+  CANDIDATE MCP tool surface for the Bot Butcher Classification API, derived from the two published
+  OpenAPI operations. Bot Butcher does NOT ship an MCP server: no hosted endpoint, no stdio package,
+  no mention of MCP anywhere on its site, and no MCP package in any registry. This manifest is a
+  proposal for what a server would expose if one existed, and is pointed at from apis.yml with
+  type X-MCPServerCandidate — never MCPServer — so it is not read as a shipped agent surface.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: probed
+search_evidence:
+  - url: https://api.botbutcher.com/mcp
+    method: POST tools/list
+    status: 404
+    finding: No MCP endpoint on the API host.
+  - url: https://botbutcher.com/mcp
+    status: 404
+    finding: No MCP endpoint on the primary site.
+  - url: https://botbutcher.com/.well-known/ai-plugin.json
+    status: 404
+    finding: No plugin manifest.
+  - url: https://registry.npmjs.org/-/v1/search?text=botbutcher
+    status: 200
+    finding: No package, therefore no stdio server to install.
+  - url: https://botbutcher.com/documentation
+    status: 200
+    finding: The reference documents two REST operations and no agent or MCP integration.
+auth_if_built:
+  type: api-key
+  header: x-api-key
+  note: >-
+    A server would need to hold a per-form Bot Butcher API key; keys are static and long-lived with
+    no documented rotation, so an operator should scope one key per form and per deployment.
+tools:
+  - name: classify_message
+    description: >-
+      Classify a contact form message as spam or legitimate, optionally within the context of the
+      website it was posted on.
+    rest:
+      operationId: classifyMessage
+      method: POST
+      path: /
+    inputSchema:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: The text to classify as spam or not.
+        domain:
+          type: string
+          description: Root domain where the contact form is located; boosts accuracy.
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Arbitrary data to store with the request.
+    consequence: write
+    note: >-
+      Billable and non-idempotent — every call creates a new classification and, unless storage is
+      disabled on the account, a new stored message. There is no reversal operation.
+  - name: get_message
+    description: Retrieve a previously classified message and its verdict by message_id.
+    rest:
+      operationId: getMessage
+      method: GET
+      path: /message/{message_id}
+    inputSchema:
+      type: object
+      required:
+        - message_id
+      properties:
+        message_id:
+          type: string
+          description: Unique identifier of a previously submitted message.
+    consequence: read

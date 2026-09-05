@@ -1,0 +1,66 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  npm registry search, PyPI, RubyGems, crates.io, GitHub code/user search, and the Bot Butcher
+  documentation and homepage
+description: >-
+  Client library / SDK inventory for Bot Butcher. Bot Butcher publishes NO client libraries in any
+  package registry. The API reference offers copy-paste request snippets in seven languages
+  (cURL, Python, JavaScript, TypeScript, Java, C#, Rust) built on each language's stock HTTP
+  client — requests, XMLHttpRequest, axios, HttpURLConnection, HttpClient, reqwest — and no
+  vendor package. Integration is a single POST, so there is little for an SDK to wrap.
+package_count: 0
+official_package_count: 0
+packages: []
+searched:
+  - registry: npm
+    query: botbutcher
+    url: https://registry.npmjs.org/-/v1/search?text=botbutcher
+    status: 200
+    result: 0 packages
+  - registry: npm
+    query: bot-butcher
+    url: https://registry.npmjs.org/-/v1/search?text=bot-butcher
+    status: 200
+    result: no Bot Butcher package; matches are unrelated bot frameworks
+  - registry: pypi
+    query: botbutcher
+    url: https://pypi.org/pypi/botbutcher/json
+    status: 404
+    result: absent
+  - registry: rubygems
+    query: botbutcher
+    url: https://rubygems.org/api/v1/gems/botbutcher.json
+    status: 404
+    result: absent
+  - registry: crates.io
+    query: botbutcher
+    url: https://crates.io/api/v1/crates?q=botbutcher
+    status: 200
+    result: 0 crates
+  - registry: github
+    query: botbutcher
+    url: https://api.github.com/search/repositories?q=botbutcher
+    status: 200
+    result: 0 repositories
+  - registry: github
+    query: HillsideLab (the operating company named in the terms and privacy pages)
+    url: https://api.github.com/users/HillsideLab/repos
+    status: 200
+    result: >-
+      1 public repository (ec-next, an ecommerce demo). No Bot Butcher client library, SDK or
+      sample repository.
+code_samples:
+  published: true
+  url: https://botbutcher.com/documentation
+  languages:
+    - cURL
+    - Python
+    - JavaScript
+    - TypeScript
+    - Java
+    - C#
+    - Rust
+  note: >-
+    Documentation snippets only — no installable artifact, no versioned distribution, and
+    therefore no registry metadata and no release date to read decay from.
