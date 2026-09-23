@@ -12,9 +12,7 @@ info:
 
     a boolean `spam` verdict and a `message_id` that can be used to retrieve the
 
-    stored message later.
-
-    '
+    stored message later.'
   version: 1.0.0
   contact:
     name: Bot Butcher
@@ -22,11 +20,7 @@ info:
   termsOfService: https://botbutcher.com/terms
   x-generated-from: documentation
   x-source-url: https://botbutcher.com/documentation
-  x-provenance: Not published by Bot Butcher. Written by API Evangelist from the provider's own public
-    API reference at https://botbutcher.com/documentation (fetched 2026-09-04, HTTP 200) and cross-checked
-    against the provider's public Postman collection (https://www.postman.com/collections/24192121-47f4e172-5026-4788-b752-cbbc5488a03e).
-    Every path, header, field, status code and example below appears verbatim in one of those two sources.
-  x-refined-from: openapi/_original/bot-butcher-openapi.yml
+  x-provenance: Not published by Bot Butcher. Written by API Evangelist from the provider's own public API reference at https://botbutcher.com/documentation (fetched 2026-09-04, HTTP 200) and cross-checked against the provider's public Postman collection (https://www.postman.com/collections/24192121-47f4e172-5026-4788-b752-cbbc5488a03e). Every path, header, field, status code and example below appears verbatim in one of those two sources.
 servers:
 - url: https://api.botbutcher.com
   description: Production
@@ -40,9 +34,7 @@ paths:
     post:
       operationId: classifyMessage
       summary: Classify a message as spam or legitimate
-      description: Submit contact form data to Bot Butcher and receive a JSON classification result. Supplying
-        the root domain where the contact form lives boosts accuracy; omitting it reduces accuracy by
-        roughly 6% but shares less data.
+      description: Submit contact form data to Bot Butcher and receive a JSON classification result. Supplying the root domain where the contact form lives boosts accuracy; omitting it reduces accuracy by roughly 6% but shares less data.
       tags:
       - Classification
       requestBody:
@@ -110,18 +102,10 @@ paths:
                       repair-order: 1234567
                       phone: '+13105555555'
         '400':
-          description: Malformed request. Returned when the message_id is missing or unknown, or when
-            a required header is missing.
+          description: Malformed request. Returned when the message_id is missing or unknown, or when a required header is missing.
         '401':
           description: Unauthorized. Returned when authentication fails.
 components:
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: x-api-key
-      description: API key issued at https://botbutcher.com/get-started. The provider's Postman collection
-        notes that each form has its own key.
   schemas:
     ClassificationRequest:
       type: object
@@ -152,8 +136,7 @@ components:
           description: HTTP status code indicating the success or failure of the request.
         notes:
           type: array
-          description: Returned when a supplied domain is not a valid domain. Classification still occurs,
-            with less accuracy.
+          description: Returned when a supplied domain is not a valid domain. Classification still occurs, with less accuracy.
           items:
             type: string
     Message:
@@ -179,3 +162,9 @@ components:
           type: object
           additionalProperties: true
           description: The optional data sent with the classify request, when provided.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key issued at https://botbutcher.com/get-started. The provider's Postman collection notes that each form has its own key.
