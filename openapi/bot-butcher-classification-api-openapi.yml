@@ -124,21 +124,6 @@ components:
           description: Returned when a supplied domain is not a valid domain. Classification still occurs, with less accuracy.
           items:
             type: string
-    ClassificationRequest:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: The text to classify as spam or not.
-        domain:
-          type: string
-          description: The root domain where the contact form is located. Optional; boosts accuracy.
-        metadata:
-          type: object
-          additionalProperties: true
-          description: Any information you want stored with the request.
     Message:
       type: object
       properties:
@@ -162,6 +147,21 @@ components:
           type: object
           additionalProperties: true
           description: The optional data sent with the classify request, when provided.
+    ClassificationRequest:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: The text to classify as spam or not.
+        domain:
+          type: string
+          description: The root domain where the contact form is located. Optional; boosts accuracy.
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Any information you want stored with the request.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
