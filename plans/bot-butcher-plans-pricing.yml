@@ -95,3 +95,19 @@ signup: https://botbutcher.com/get-started
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units:
+  - request
+  plans:
+  - name: Usage based
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - request
+    periods:
+    - month
