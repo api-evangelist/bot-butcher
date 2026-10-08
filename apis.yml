@@ -87,6 +87,8 @@ apis:
     email: botbutcher@hillsidelab.com
     url: https://botbutcher.com/
 common:
+  - type: FinOps
+    url: finops/bot-butcher-finops.yml
   - type: Website
     url: https://botbutcher.com/
   - type: Documentation
