@@ -107,23 +107,6 @@ paths:
           description: Unauthorized. Returned when authentication fails.
 components:
   schemas:
-    ClassificationResult:
-      type: object
-      properties:
-        spam:
-          type: boolean
-          description: Indicates if the message is classified as spam (true) or not (false).
-        message_id:
-          type: string
-          description: A unique identifier for the message.
-        status_code:
-          type: integer
-          description: HTTP status code indicating the success or failure of the request.
-        notes:
-          type: array
-          description: Returned when a supplied domain is not a valid domain. Classification still occurs, with less accuracy.
-          items:
-            type: string
     Message:
       type: object
       properties:
@@ -162,6 +145,23 @@ components:
           type: object
           additionalProperties: true
           description: Any information you want stored with the request.
+    ClassificationResult:
+      type: object
+      properties:
+        spam:
+          type: boolean
+          description: Indicates if the message is classified as spam (true) or not (false).
+        message_id:
+          type: string
+          description: A unique identifier for the message.
+        status_code:
+          type: integer
+          description: HTTP status code indicating the success or failure of the request.
+        notes:
+          type: array
+          description: Returned when a supplied domain is not a valid domain. Classification still occurs, with less accuracy.
+          items:
+            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
