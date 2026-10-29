@@ -1,4 +1,4 @@
-# Bot Butcher (bot-butcher)
+# Bot Butcher
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,56 +64,134 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large language model to classify contact form submissions as spam or legitimate messages. The service analyzes messages within the context of what each website is about, providing context-aware classification with 99% reported accuracy. It supports multi-tenant architectures and is designed for enterprise scalability across vertical SaaS and website builder platforms.
+Bot Butcher is an AI-powered spam detection API that uses a fine-tuned large language model to classify contact form submissions as spam or legitimate messages. The service analyzes messages within the context of what each website is about, providing context-aware classification with 99% reported accuracy against the provider's own human-graded benchmark. It supports multi-tenant architectures and is designed for enterprise scalability across vertical SaaS and website builder platforms. The API has two operations — classify a message, retrieve a message by id — authenticated with a per-form x-api-key header, and is sold on a single usage-based plan whose first ten requests each month are free. Bot Butcher is operated by Hillside Lab Inc, a Delaware corporation based in Pasadena, California.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bot-butcher/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bot-butcher/refs/heads/main/apis.yml)
+**Areas:** Bots · Spam Detection · Contact Forms · AI Classification · Security
 
-## Scope
+## Bot Butcher on APIs.io
 
-- **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Bot Butcher is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bot-butcher/](https://apis.io/providers/bot-butcher/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (1)
 
-- Bots
-- Spam Detection
-- Contact Forms
-- AI Classification
-- Security
+- [Bot Butcher Classification API](https://apis.io/apis/bot-butcher/bot-butcher-classification-api/) — Submit contact form data to Bot Butcher and receive a JSON classification result indicating whether the message is spam or legitimate. The AI model…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-07
-- **Modified:** 2026-04-21
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Bot Butcher Classification API
+Model Context Protocol servers that expose the API to agents.
 
-Submit contact form data to Bot Butcher and receive a JSON classification result indicating whether the message is spam or legitimate. The AI model classifies each message within the context of your specific website, delivering context-aware spam detection for multi-tenant and enterprise applications.
+- [bot-butcher-mcp.yml](https://apis.io/servers/bot-butcher/bot-butcher-mcp-yml/)
 
-- **Human URL:** [https://botbutcher.com/](https://botbutcher.com/)
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Spam Detection
-- Bot Detection
-- AI Classification
-- Contact Forms
+- [Bot Butcher Agentic Access](https://apis.io/agentic-access/bot-butcher/bot-butcher-agentic-access/)
 
-#### Properties
+#### Collections (2)
 
-- [Documentation](https://botbutcher.com/)
-- [Postman Collection](collections/bot-butcher.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/bot-butcher.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-## Common Properties
+- [Bot Butcher Classification API](https://apis.io/collections/bot-butcher/open-bot-butcher/)
+- [Bot Butcher Classification API](https://apis.io/collections/bot-butcher/open-bot-butcher-classification-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Bot Butcher Classification Api Overlay](https://apis.io/overlays/bot-butcher/bot-butcher-classification-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Bot Butcher Authentication](https://apis.io/security/bot-butcher/bot-butcher-authentication/)
+- [Bot Butcher Domain Security](https://apis.io/security/bot-butcher/bot-butcher-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Bot Butcher Plans Pricing](https://apis.io/plans/bot-butcher/bot-butcher-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Bot Butcher Rate Limits](https://apis.io/rate-limits/bot-butcher/bot-butcher-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Bot Butcher Finops](https://apis.io/finops/bot-butcher/bot-butcher-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://botbutcher.com/)
-- [Documentation](https://botbutcher.com/)
+- [Documentation](https://botbutcher.com/documentation)
+- [Getting started](https://botbutcher.com/get-started)
+- [API reference](https://botbutcher.com/documentation)
+- [Pricing](https://botbutcher.com/pricing)
+- [Sign up](https://botbutcher.com/get-started)
+- [Terms of service](https://botbutcher.com/terms)
+- [Privacy policy](https://botbutcher.com/privacy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
+**Kin Score 35.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 15.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 65.8 |
+
+**Agent readiness 28.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/bot-butcher/](https://apis.io/providers/bot-butcher/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Bot Butcher: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bot-butcher/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
